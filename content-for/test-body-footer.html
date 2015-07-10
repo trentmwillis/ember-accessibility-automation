@@ -1,0 +1,115 @@
+<script>
+  /**
+   * Closure module to ensure a well-defined API for interacting with the
+   * accessibility automation framework.
+   */
+  (function emberA11yAutomation() {
+    /**
+     * The registry of accessibility audits to be run.
+     * @private
+     * @type {Array}
+     */
+    var _audits = [];
+
+    /**
+     * Whether audits are to run or not.
+     * @private
+     * @type {Boolean}
+     */
+    var _auditsOn = true;
+
+    /**
+     * Runs all the currently registered audits.
+     * @private
+     * @return {Void}
+     */
+    function _runAudits() {
+      if (_auditsOn) {
+        for (var i = 0, l = _audits.length; i < l; i++) {
+          _audits[i]();
+        }
+      }
+    }
+
+    /**
+     * Adds a class to the document body that modifies the testing container's
+     * visual appearance.
+     * @private
+     * @return {Void}
+     */
+   function _a11yOnAutomation() {
+      if (_auditsOn) {
+        document.body.classList.add('a11y-enabled');
+      }
+    }
+
+    /**
+     * Removes a class from the document body to reset the testing container's
+     * visual appearance.
+     * @private
+     * @return {Void}
+     */
+    function _a11yOffAutomation() {
+      document.body.classList.remove('a11y-enabled');
+    }
+
+    /**
+     * Defines a limited API for interacting with a11y.
+     * @public
+     * @type {Object}
+     */
+    window.a11y = {
+      /**
+       * A reference to all registered accessibility audits. This is private,
+       * but surfaced for debugging purposes.
+       * @private
+       * @type {Array}
+       */
+      _audits: _audits,
+
+      /**
+       * Registers an accessibility audit with the automation framework.
+       * @public
+       * @param {Function}
+       * @return {Void}
+       */
+      registerAudit: function(audit) {
+        var type = typeof audit;
+
+        if (type !== 'function') {
+          throw new Error('Error: audits must be of type function, not of type ' + type);
+        }
+
+        _audits.push(audit);
+      },
+
+      /**
+       * Turns all accessibility audits on.
+       * @public
+       * @return {Void}
+       */
+      turnAuditsOn: function() {
+        _auditsOn = true;
+        automation.on();
+      },
+
+      /**
+       * Turns all accessibility audits off.
+       * @public
+       * @return {Void}
+       */
+      turnAuditsOff: function() {
+        _auditsOn = false;
+        automation.off();
+      }
+    };
+
+    /**
+     * Registers the accessibility automation callbacks to their respective
+     * queues.
+     */
+    automation.afterRender(_runAudits);
+    automation.onAutomation(_a11yOnAutomation);
+    automation.offAutomation(_a11yOffAutomation);
+  }());
+</script>

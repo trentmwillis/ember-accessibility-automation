@@ -1,25 +1,51 @@
-# Ember-accessibility-automation
+# Ember Accessibility Automation
 
-This README outlines the details of collaborating on this Ember addon.
+This addon aims to provide an easy-to-use scaffolding for automating
+accessibility in Ember. The interface of this addon strives to be Ember-specific
+but accessibility framework agnostic. This means you can easily use it with your
+auditing library of choice, such as
+[Deque Labs'](https://github.com/dequelabs) [axe-core](https://github.com/dequelabs/axe-core) or
+[Chrome's Accessibility Developer Tools](https://github.com/GoogleChrome/accessibility-developer-tools).
 
-## Installation
+## Testing
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+The integration with testing relies on [ember-automation](https://github.com/trentmwillis/ember-automation).
+This allows easy to use hooks into the render-cycle of your application during
+acceptance tests. This means that you can be assured that every state of your
+application meets your auditing guidelines.
 
-## Running
+### Implementing An Audit
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+To implement an accessibility audit, simply define it as a function and register
+it like so:
 
-## Running Tests
+```javascript
+function a11yAudit() {
+  // check for accessibility violations
+}
 
-* `ember test`
-* `ember test --server`
+a11y.registerAudit(a11yAudit);
+```
 
-## Building
+This sets the audit up to run after render during acceptance tests (or any time
+you turn audits on) and allows you to break on them during any given cycle (see
+below for more info).
 
-* `ember build`
+### Controlling When Audits Run
 
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+By default, audits run during every render of your acceptance tests. However,
+not all developments cycles are the same, so we give you easy hooks to control
+when the audits run.
+
+To turn audits on (e.g., during unit tests), simply use the following at any
+point after the test module starts:
+
+```javascript
+a11y.turnAuditsOn();
+```
+
+To turn audits off (e.g., during excused acceptance tests), simply use:
+
+```javascript
+a11y.turnAuditsOff()
+```
