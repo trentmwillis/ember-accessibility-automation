@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "ember-cli-babel": "^5.0.0",
-    "ember-automation": "*"
+    "ember-automation": "git://github.com/trentmwillis/ember-automation.git"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
