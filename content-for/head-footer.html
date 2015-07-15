@@ -1,0 +1,21 @@
+<style>
+  /**
+   * Base styling for highlight overlays. Positioning is in handled in the
+   * method that creates the overlays (addon/utils/highlight-element.js).
+   * TODO: Make highlight color variable based on severity.
+   */
+  .a11y-highlight-issue {
+    box-sizing: border-box;
+    position: absolute;
+    background-color: rgba(255, 0, 0, 0.5);
+    border: 1px solid red;
+    color: white;
+    font: 14px/1.5 sans-serif;
+    transition: opacity 0.3s;
+  }
+
+  /* Fade the overlay on hover so that it is easier to see underlying issue */
+  .a11y-highlight-issue:hover {
+    opacity: 0.25;
+  }
+</style>

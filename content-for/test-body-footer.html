@@ -117,9 +117,7 @@
 
     // Register the Ember-specific audits
     var actionAuditContext = {
-      element: document.getElementById('ember-testing'),
-      // TODO: Make this not a no-op
-      highlightIssue: function() {}
+      element: document.getElementById('ember-testing')
     };
     // TODO: Remove jQuery dependency by polyfilling Function.bind
     window.a11y.registerAudit(Ember.$.proxy(actionAudit, actionAuditContext));

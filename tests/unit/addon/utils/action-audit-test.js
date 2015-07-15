@@ -5,7 +5,7 @@ import actionAudit from 'ember-accessibility-automation/utils/action-audit';
 
 let sandbox;
 
-module('Unit | Addon | Utils | a11y-error', {
+module('Unit | Addon | Utils | action-audit', {
   beforeEach() {
     sandbox = sinon.sandbox.create();
   },

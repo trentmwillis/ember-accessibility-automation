@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import A11yError from './a11y-error';
+import highlightElement from './highlight-element';
 import elementMatches from '../polyfills/element-matches';
 
 const { Logger } = Ember;
@@ -32,7 +33,12 @@ export default function actionAudit() {
       let hasInnerHTML = !!el.innerHTML;
       let elementTag = hasInnerHTML ? el.outerHTML.substr(0, el.outerHTML.indexOf(el.innerHTML)) : el.outerHTML;
 
-      this.highlightIssue(el, 'Non-focusable action', 'action-audit-issue');
+      // If we're auditing a component, use its method instead of the util
+      if (this.highlightIssue) {
+        this.highlightIssue(el, 'Non-focusable action', 'action-audit-issue');
+      } else {
+        highlightElement(el, 'Non-focusable action', 'action-audit-issue');
+      }
 
       Logger.error(new A11yError(`The element ${elementTag} has an action bound to it, but is not focusable.`, el));
     }
