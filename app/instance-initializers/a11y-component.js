@@ -20,11 +20,11 @@ export function initialize(application) {
      * @param {HTMLElement|String} el
      * @param {String} [message]
      * @param {String} [className]
-     * @return {Void}
+     * @return {HTMLElement}
      */
     highlightIssue(el, message, className) {
       let element = typeof el === 'string' ? this.element.querySelector(el) : el;
-      highlightElement(element, message, className);
+      return highlightElement(element, message, className);
     },
 
     /**

@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('sub-route');
+  this.route('failing-action');
 });
 
 export default Router;

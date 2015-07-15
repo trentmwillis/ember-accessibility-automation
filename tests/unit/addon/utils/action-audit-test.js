@@ -20,7 +20,6 @@ module('Unit | Addon | Utils | action-audit', {
 test('actionAudit throws an error on a failing element', function(assert) {
   assert.expect(2);
 
-  let logger = sandbox.spy(Ember.Logger, 'error');
   let highlightIssue = sandbox.spy();
   let element = document.createElement('div');
   element.innerHTML = '<p data-ember-action="52"></p>';
@@ -28,10 +27,8 @@ test('actionAudit throws an error on a failing element', function(assert) {
 
   let context = { element, highlightIssue };
 
-  actionAudit.call(context);
-
+  assert.throws(() => actionAudit.call(context), /ACCESSIBILITY ERROR/);
   assert.ok(highlightIssue.calledOnce);
-  assert.ok(logger.calledOnce);
 
   element.parentElement.removeChild(element);
 });
@@ -39,7 +36,6 @@ test('actionAudit throws an error on a failing element', function(assert) {
 test('actionAudit throws an error on a failing element with prior passing elements', function(assert) {
   assert.expect(2);
 
-  let logger = sandbox.spy(Ember.Logger, 'error');
   let highlightIssue = sandbox.spy();
   let element = document.createElement('div');
   element.innerHTML = '<button data-ember-action="42"></button><p data-ember-action="52"></p>';
@@ -47,10 +43,8 @@ test('actionAudit throws an error on a failing element with prior passing elemen
 
   let context = { element, highlightIssue };
 
-  actionAudit.call(context);
-
+  assert.throws(() => actionAudit.call(context), /ACCESSIBILITY ERROR/);
   assert.ok(highlightIssue.calledOnce);
-  assert.ok(logger.calledOnce);
 
   element.parentElement.removeChild(element);
 });

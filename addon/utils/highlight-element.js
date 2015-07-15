@@ -85,11 +85,12 @@ function _addHighlightToDOM(highlight) {
  * @param {HTMLElement} element
  * @param {String} message
  * @param {String} className
- * @return {Void}
+ * @return {HTMLElement}
  */
 export default function highlightElement(element, message, className) {
   let highlight = _createHighlightElement(element);
   _addMessageToHighlight(highlight, message);
   _addClassNameToElement(element, className);
   _addHighlightToDOM(highlight, element);
+  return highlight;
 }

@@ -1,9 +1,6 @@
-import Ember from 'ember';
 import A11yError from './a11y-error';
 import highlightElement from './highlight-element';
 import elementMatches from '../polyfills/element-matches';
-
-const { Logger } = Ember;
 
 // Selector for all focusable elements
 const FOCUS_SELECTOR = [
@@ -21,7 +18,7 @@ const FOCUS_SELECTOR = [
 /**
  * Checks all element's within the context's "element" property to ensure they
  * are focusable if they have an action bound. If an action is not focusable, it
- * is highlighted and an error is logged.
+ * is highlighted and an error is logged/thrown.
  * @return {Void}
  */
 export default function actionAudit() {
@@ -40,7 +37,7 @@ export default function actionAudit() {
         highlightElement(el, 'Non-focusable action', 'action-audit-issue');
       }
 
-      Logger.error(new A11yError(`The element ${elementTag} has an action bound to it, but is not focusable.`, el));
+      A11yError.throw(`The element ${elementTag} has an action bound to it, but is not focusable.`, el);
     }
   }
 }
