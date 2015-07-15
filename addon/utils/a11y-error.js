@@ -3,8 +3,9 @@
  * @param {String} message
  * @return {Void}
  */
-function A11yError(message) {
+function A11yError(message, element) {
   this.message = message;
+  this.element = element;
 }
 
 A11yError.prototype = Object.create(Error.prototype);

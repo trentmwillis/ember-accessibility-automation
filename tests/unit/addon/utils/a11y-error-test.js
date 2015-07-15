@@ -5,9 +5,14 @@ module('Unit | Addon | Utils | a11y-error');
 
 /* A11yError.constructor */
 
-test('A11yError accepts an "message" as in the constructor', function(assert) {
-  let error = new A11yError('some message');
+test('A11yError accepts a "message" and "element" in the constructor', function(assert) {
+  assert.expect(2);
+
+  let element = document.createElement('p');
+  let error = new A11yError('some message', element);
+
   assert.equal(error.message, 'some message');
+  assert.equal(error.element, element);
 });
 
 /* A11yError.toString */

@@ -12,14 +12,15 @@ export function initialize(application) {
 
   Ember.Component.reopen({
     /**
-     * Highlights an issue in the component by looking it up via a selector. Can
-     * provide a message and class name to apply to the highlighted element.
-     * @param {String} selector
+     * Highlights an issue in the component on a specified element (via either
+     * the element directly or a selector). It can also accept a message and
+     * class name to apply to the highlighted element.
+     * @param {HTMLElement|String} el
      * @param {String} [message]
      * @param {String} [className]
      */
-    highlightIssue(selector, message, className) {
-      let element = this.element.querySelector(selector);
+    highlightIssue(el, message, className) {
+      let element = typeof el === 'string' ? this.element.querySelector(el) : el;
       let box = element.getClientBoundingRect();
 
       let highlight = document.createElement('div');

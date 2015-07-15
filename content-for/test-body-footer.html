@@ -4,6 +4,9 @@
    * accessibility automation framework.
    */
   (function emberA11yAutomation() {
+    // Pulling in the action-audit utility manually.
+    var actionAudit = requireModule('ember-accessibility-automation/utils/action-audit').default;
+
     /**
      * The registry of accessibility audits to be run.
      * @private
@@ -111,5 +114,14 @@
     automation.afterRender(_runAudits);
     automation.onAutomation(_a11yOnAutomation);
     automation.offAutomation(_a11yOffAutomation);
+
+    // Register the Ember-specific audits
+    var actionAuditContext = {
+      element: document.getElementById('ember-testing'),
+      // TODO: Make this not a no-op
+      highlightIssue: function() {}
+    };
+    // TODO: Remove jQuery dependency by polyfilling Function.bind
+    window.a11y.registerAudit(Ember.$.proxy(actionAudit, actionAuditContext));
   }());
 </script>
