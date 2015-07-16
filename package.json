@@ -41,8 +41,11 @@
     "ember-addon"
   ],
   "dependencies": {
+    "broccoli-funnel": "^0.2.3",
+    "broccoli-merge-trees": "^0.2.1",
+    "ember-automation": "git://github.com/trentmwillis/ember-automation.git",
     "ember-cli-babel": "^5.0.0",
-    "ember-automation": "git://github.com/trentmwillis/ember-automation.git"
+    "ember-cli-version-checker": "^1.1.4"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
