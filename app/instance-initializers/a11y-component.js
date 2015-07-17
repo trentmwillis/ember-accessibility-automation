@@ -41,6 +41,6 @@ export function initialize(application) {
 }
 
 export default {
-  name: 'axe-component',
+  name: 'a11y-component',
   initialize
 };
